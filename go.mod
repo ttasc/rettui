@@ -1,4 +1,4 @@
-module github.com/ttasc/restt
+module github.com/ttasc/rettui
 
 go 1.24.5
 
