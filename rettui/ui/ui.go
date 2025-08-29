@@ -4,21 +4,13 @@ import (
 	"github.com/rivo/tview"
 )
 
-type Element interface {
-    addTo(layout *tview.Grid)
-    update()
-}
+type UI struct {
+    Root        *tview.Grid
 
-type elements struct {
     TabLine     *tabLine
     MainView    *mainView
     StatusLine  *statusLine
     CmdLine     *cmdLine
-}
-
-type UI struct {
-    Root *tview.Grid
-    *elements
 }
 
 func init() {
@@ -28,12 +20,10 @@ func init() {
 func NewUI(app *tview.Application) *UI {
     ui := &UI{
         tview.NewGrid(),
-        &elements{
-            newTabLine(),
-            newMainView(),
-            newStatusLine(app),
-            newCmdLine(app),
-        },
+        newTabLine(),
+        newMainView(),
+        newStatusLine(app),
+        newCmdLine(app),
     }
     ui.Root.SetRows(
         1,  // tabline

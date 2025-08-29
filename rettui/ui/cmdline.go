@@ -38,4 +38,3 @@ func newCmdLine(app *tview.Application) *cmdLine {
 func (c *cmdLine) addTo(layout *tview.Grid) {
     layout.AddItem(c, 3, 0, 1, 2, 0, 0, false)
 }
-
