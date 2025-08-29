@@ -26,7 +26,10 @@ func main() {
         case tcell.KeyEscape:
             tviewApp.SetFocus(nil)
         // TODO: Tab navigation
-        // ...
+        case tcell.KeyCtrlJ:
+            //
+        case tcell.KeyCtrlK:
+            //
         // Request navigation
         case tcell.KeyCtrlP:
             tviewApp.SetFocus(mainUI.MainView.RequestSide.Params)
