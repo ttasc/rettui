@@ -5,11 +5,11 @@ import (
 )
 
 type mainView struct {
-    RequestSide  *requestSide
-    ResponseSide *responseSide
+    ReqSide  *reqSide
+    ResSide  *resSide
 }
 
-type requestSide struct {
+type reqSide struct {
     Container   *tview.Flex
     Params      *tview.TextArea
     Headers     *tview.TextArea
@@ -17,7 +17,7 @@ type requestSide struct {
     Body        *tview.TextArea
 }
 
-type responseSide struct {
+type resSide struct {
     Container   *tview.Pages
     Headers     *tview.Table
     Body        *tview.TextView
@@ -25,19 +25,19 @@ type responseSide struct {
 
 func newMainView() *mainView {
     mainView := &mainView{
-        RequestSide:  newRequestSide(),
-        ResponseSide: newResponseSide(),
+        ReqSide:  newRequestSide(),
+        ResSide: newResponseSide(),
     }
     return mainView
 }
 
 func (m *mainView) addTo(layout *tview.Grid) {
-    layout.AddItem(m.RequestSide.Container , 1, 0, 1, 1, 0, 0, true)
-    layout.AddItem(m.ResponseSide.Container, 1, 1, 1, 1, 0, 0, true)
+    layout.AddItem(m.ReqSide.Container , 1, 0, 1, 1, 0, 0, true)
+    layout.AddItem(m.ResSide.Container, 1, 1, 1, 1, 0, 0, true)
 }
 
-func newRequestSide() *requestSide {
-    requestSide := &requestSide{
+func newRequestSide() *reqSide {
+    requestSide := &reqSide{
         Container:   tview.NewFlex().SetDirection(tview.FlexRow),
         Params:      tview.NewTextArea().SetPlaceholder("URL Params...").SetWordWrap(true),
         Headers:     tview.NewTextArea().SetPlaceholder("<key>: <value>\nExample:\n...\nCache-Control: no-cache\nServer: Microsoft-IIS/10.0\nContent-Type: application/json\n...").SetWordWrap(false),
@@ -56,8 +56,8 @@ func newRequestSide() *requestSide {
     return requestSide
 }
 
-func newResponseSide() *responseSide {
-    responseSide := &responseSide{
+func newResponseSide() *resSide {
+    responseSide := &resSide{
         Container:   tview.NewPages(),
         Headers:     tview.NewTable(),
         Body:        tview.NewTextView().SetDynamicColors(true).SetWrap(false).SetTextColor(Colors["red"]),

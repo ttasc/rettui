@@ -19,7 +19,7 @@ var Colors = map[string]tcell.Color{
     "grey"      : tcell.NewHexColor(0x828bb8), // #828bb8
 }
 
-func ReDefineTviewVars() {
+func redefineTviewVars() {
     redefineColors()
     redefineBorders()
 }
