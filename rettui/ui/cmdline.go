@@ -15,9 +15,6 @@ func newCmdLine(app *tview.Application) *cmdLine {
         tview.NewInputField().SetFieldBackgroundColor(Colors["dark"]),
         false,
     }
-    cmdLine.SetDoneFunc(func(key tcell.Key) {
-        app.SetFocus(nil)
-    })
     cmdLine.SetFocusFunc(func() {
         cmdLine.shouldFocus = true
         cmdLine.SetText("")

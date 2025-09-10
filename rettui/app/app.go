@@ -1,29 +1,28 @@
 package app
 
 import (
-	"github.com/rivo/tview"
 	"github.com/ttasc/rettui/rettui/ui"
 )
 
 type App struct {
-    tviewApp    *tview.Application
-    ui          *ui.UI
+    UI          *ui.UI
 }
 
 func NewApp() *App {
+    UI := ui.NewUI()
 
-    app := tview.NewApplication().EnableMouse(true)
+    app := &App{UI}
 
-    ui := ui.NewUI(app)
+    app.LoadKeyBinds()
 
-    app.SetRoot(ui.Root, true)
-    app.SetFocus(nil)
-
-    setKeyBinds(app, ui)
-
-    return &App{app, ui}
+    return app
 }
 
 func (app *App) Run() error {
-    return app.tviewApp.Run()
+    return app.UI.Run()
 }
+
+func (app *App) Quit() {
+    app.UI.Stop()
+}
+

@@ -2,7 +2,12 @@ package net
 
 import (
 	"bytes"
+	"io"
+	"log"
 	"net/http"
+	"net/url"
+	"os"
+	"strings"
 )
 
 type Request struct {
@@ -34,3 +39,31 @@ func (req *Request) Size() int {
     return size
 }
 
+func NewRequest(method string, url *url.URL, headers []string, body string) *http.Request {
+    req, err := http.NewRequest(method, url.String(), createBody(body))
+    if err != nil {
+        log.Fatalf("unable to create request: %v", err)
+    }
+    for _, h := range headers {
+        k, v, ok := headerKeyValue(h)
+        if !ok { continue }
+        if strings.EqualFold(k, "host") {
+            req.Host = v
+            continue
+        }
+        req.Header.Add(k, v)
+    }
+    return req
+}
+
+func createBody(body string) io.Reader {
+    if strings.HasPrefix(body, "@") {
+        filename := body[1:]
+        f, err := os.Open(filename)
+        if err != nil {
+            log.Fatalf("failed to open data file %s: %v", filename, err)
+        }
+        return f
+    }
+    return strings.NewReader(body)
+}

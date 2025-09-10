@@ -5,6 +5,8 @@ import (
 )
 
 type UI struct {
+    *tview.Application
+
     Root        *tview.Grid
 
     TabLine     *tabLine
@@ -17,9 +19,14 @@ func init() {
     redefineTviewVars()
 }
 
-func NewUI(app *tview.Application) *UI {
+func NewUI() *UI {
+    root := tview.NewGrid()
+
+    app := tview.NewApplication().EnableMouse(true).SetRoot(root, true).SetFocus(nil)
+
     ui := &UI{
-        tview.NewGrid(),
+        app,
+        root,
         newTabLine(),
         newMainView(),
         newStatusLine(app),
@@ -37,4 +44,8 @@ func NewUI(app *tview.Application) *UI {
     ui.CmdLine.addTo(ui.Root)
 
     return ui
+}
+
+func (ui *UI) Run() error {
+    return ui.Application.Run()
 }

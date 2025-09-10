@@ -26,10 +26,6 @@ func (t *tabLine) addTo(layout *tview.Grid) {
     layout.AddItem(t.textview, 0, 0, 1, 2, 0, 0, false)
 }
 
-func (t *tabLine) addToFlex(layout *tview.Flex) {
-    layout.AddItem(t.textview, 1, 1, false)
-}
-
 func (t *tabLine) update() {
     for index, tab := range t.tabs {
         fmt.Fprintf(t.textview, `["%d"][#222436] %s [white][""]`, index, tab)

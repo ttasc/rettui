@@ -3,20 +3,12 @@ package net
 import (
 	"net/http"
 	"strconv"
-	"time"
 )
 
 type Response struct {
     *http.Response
-    Timing ResponseTime
-    BodyBytes []byte
-}
-
-type ResponseTime struct {
-    DNSLookup    time.Duration
-    Connect      time.Duration
-    TLSHandshake time.Duration
-    FirstByte    time.Duration
+    Timing Timming
+    body []byte
 }
 
 func (res *Response) Size() int {
@@ -34,7 +26,11 @@ func (res *Response) Size() int {
     size += 2 // CRLF at the end of headers
 
     // Body
-    size += len(res.BodyBytes)
+    size += len(res.body)
 
     return size
+}
+
+func (res *Response) GetBody() []byte {
+    return res.body
 }

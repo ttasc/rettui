@@ -10,7 +10,7 @@ type mainView struct {
 }
 
 type reqSide struct {
-    Container   *tview.Flex
+    *tview.Flex
     Params      *tview.TextArea
     Headers     *tview.TextArea
     BodyTypes   *tview.DropDown
@@ -18,7 +18,7 @@ type reqSide struct {
 }
 
 type resSide struct {
-    Container   *tview.Pages
+    *tview.Pages
     Headers     *tview.Table
     Body        *tview.TextView
 }
@@ -32,13 +32,13 @@ func newMainView() *mainView {
 }
 
 func (m *mainView) addTo(layout *tview.Grid) {
-    layout.AddItem(m.ReqSide.Container , 1, 0, 1, 1, 0, 0, true)
-    layout.AddItem(m.ResSide.Container, 1, 1, 1, 1, 0, 0, true)
+    layout.AddItem(m.ReqSide, 1, 0, 1, 1, 0, 0, true)
+    layout.AddItem(m.ResSide, 1, 1, 1, 1, 0, 0, true)
 }
 
 func newRequestSide() *reqSide {
     requestSide := &reqSide{
-        Container:   tview.NewFlex().SetDirection(tview.FlexRow),
+        Flex:        tview.NewFlex().SetDirection(tview.FlexRow),
         Params:      tview.NewTextArea().SetPlaceholder("URL Params...").SetWordWrap(true),
         Headers:     tview.NewTextArea().SetPlaceholder("<key>: <value>\nExample:\n...\nCache-Control: no-cache\nServer: Microsoft-IIS/10.0\nContent-Type: application/json\n...").SetWordWrap(false),
         BodyTypes:   tview.NewDropDown().SetLabel("Body-type ").SetOptions([]string{"none", "form-data", "x-www-form-urlencoded", "raw"}, nil).SetCurrentOption(0),
@@ -49,25 +49,25 @@ func newRequestSide() *reqSide {
     requestSide.Headers.SetBorder(true).SetTitle("Request Headers").SetTitleAlign(tview.AlignLeft)
     requestSide.Body.SetBorder(true).SetTitle("Request Body").SetTitleAlign(tview.AlignLeft)
 
-    requestSide.Container.AddItem(requestSide.Params, 4, 1, false)
-    requestSide.Container.AddItem(requestSide.Headers, 10, 1, false)
-    requestSide.Container.AddItem(requestSide.BodyTypes, 1, 1, false)
-    requestSide.Container.AddItem(requestSide.Body, 0, 1, false)
+    requestSide.AddItem(requestSide.Params, 4, 1, false)
+    requestSide.AddItem(requestSide.Headers, 10, 1, false)
+    requestSide.AddItem(requestSide.BodyTypes, 1, 1, false)
+    requestSide.AddItem(requestSide.Body, 0, 1, false)
     return requestSide
 }
 
 func newResponseSide() *resSide {
     responseSide := &resSide{
-        Container:   tview.NewPages(),
+        Pages:       tview.NewPages(),
         Headers:     tview.NewTable(),
         Body:        tview.NewTextView().SetDynamicColors(true).SetWrap(false).SetTextColor(Colors["red"]),
     }
 
     responseSide.Body.SetText(responseTestText)
 
-    responseSide.Container.SetBorder(true).SetTitle("Response - Ctrl+H/Ctrl+B to switch Headers/Body").SetTitleAlign(tview.AlignLeft)
-    responseSide.Container.AddPage("Headers", responseSide.Headers, true, false)
-    responseSide.Container.AddPage("Body", responseSide.Body, true, true)
+    responseSide.SetBorder(true).SetTitle("Response - Ctrl+H/Ctrl+B to switch Headers/Body").SetTitleAlign(tview.AlignLeft)
+    responseSide.AddPage("Headers", responseSide.Headers, true, false)
+    responseSide.AddPage("Body", responseSide.Body, true, true)
     return responseSide
 }
 
