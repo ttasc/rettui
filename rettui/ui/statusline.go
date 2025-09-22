@@ -29,13 +29,14 @@ func newStatusLine(app *tview.Application) *statusLine {
         left: &left{
             textview: tview.NewTextView().SetDynamicColors(true).SetTextAlign(tview.AlignLeft).SetChangedFunc(func(){app.Draw()}),
             method: "GET",
-            url: "󰌷 <URL>",
+            // url: "󰌷 <URL>",
+            url: "󰌷 example.com",
         },
         right: &right{
             textview:tview.NewTextView().SetDynamicColors(true).SetTextAlign(tview.AlignRight).SetChangedFunc(func(){app.Draw()}),
-            timing: "0s",
-            size: "0B",
-            status: "STATUS",
+            timing: "522ms",
+            size: "979B",
+            status: "200 OK",
         },
     }
     statusLine.left.textview.SetBackgroundColor(tcell.NewHexColor(0x1b1d2b))
